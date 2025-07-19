@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-code Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+         body { font-family: Arial; 
+                text-align: center;   
+                padding: 50px;
+                background-color: #1B3C53;
+            }
+        button { 
+                        padding: 10px; 
+                        font-size: 16px; 
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        background-color: #4a90e2;
+                        color: white;
+                        transition: background-color 0.3s ease;
+                    }
+        #qrcode { 
+            margin-top: 20px; 
+             }
+         input{
+            padding: 10px; 
+            font-size: 16px; 
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            transition: border 0.3s;
+         }
+         input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        #qrcode {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+    }
+
+    </style>
+</head>
+<body>
+    <h1>QR code Generator</h1>
+    <input type="text" id="text" placeholder="Enter a Text or Url" onkeydown="if(event.key==='Enter') generatecode();">
+    <button onclick="generatecode()">Generate</button>
+    <button onclick="terminateQRCode()">Terminate</button>
+    <div id="qrcode"></div>
+
+    
+    <script>
+        
+      function  generatecode(){
+            const codeContainer = document.getElementById("qrcode");
+            codeContainer.innerHTML = "" ;//clearing the content inside the inner text
+            const text = document.getElementById("text").value ; 
+
+            if (!text.trim()) {
+                alert("please Enter a Valid Text or URL") ;
+                return ;
+            }
+        // Qr code generating
+         new QRCode(codeContainer,{
+                text:text,
+                width:200,
+                height:200,
+                colorDark:"#000000",
+                colorLight:"#ffffff",
+                correctLevel:QRCode.CorrectLevel.H
+            })
+        }
+
+        // Terminate the current qrcode to generate new one
+        function terminateQRCode() {
+            const codeContainer = document.getElementById("qrcode");
+            codeContainer.innerHTML = "";
+            qrCodeInstance = null;
+        }
+    </script>
+</body>
+</html>
